@@ -1,1 +1,13 @@
-[{"index":1,"timestamp":0,"proof":1917336,"transactions":[{"id":"b3c973e2-db05-4eb5-9668-3e81c7389a6d","timestamp":0,"payload":"I am Heribert Innoq"}],"previousBlockHash":"0"}]
+{"blocks":[
+{ "index":1, "timestamp":1524142939, "proof":11, "transactions":[], "previousBlockHash":"07abf0e89a7a24ab1876904e6e5ee921c345e195ccc25b08a3050f165735698f" }
+,{ "index": 10, "timestamp": 1524144578, "proof": 914, "transactions": [], "previousBlockHash": "0001618dc29b25ab776cdfbd4a1bb790738cb114c249570d92cbd7bd94678891"}
+,{ "index": 11, "timestamp": 1524144586, "proof": 3374, "transactions": [], "previousBlockHash": "000468441d395c3a4f06fba762e58ab4f28a8f2b173a26811084a6df28e9d7f0"}
+,{ "index":2, "timestamp":1524144420, "proof":2483, "transactions":[], "previousBlockHash":"02cc6914f99dd54520e256c9513897a07b4ccbb914b974b2873a4e707d8b51cd" }
+,{ "index":3, "timestamp":1524144470, "proof":2596, "transactions":[], "previousBlockHash":"0009f35b2a8b8e683d6bbe79d0d59064c5234ee7c0b89fbe5aa9acf9dd22a0c2" }
+,{ "index":4, "timestamp":1524144490, "proof":1315, "transactions":[], "previousBlockHash":"0004ebb84ac363e32a2485f2fde397b1b321fcf3916c7023820f43cb27dcd8d6" }
+,{ "index":5, "timestamp":1524144501, "proof":6883, "transactions":[], "previousBlockHash":"000d374d24caac37294a26e5a2066899ad8dcca816a3db3b2b3784554d5b0c69" }
+,{ "index":6, "timestamp":1524144527, "proof":1182, "transactions":[], "previousBlockHash":"00067b913b33e5607b0d33ec60e3eb4d2ba47ac18b7d6876aeaf240dc7e2d908" }
+,{ "index":7, "timestamp":1524144534, "proof":2118, "transactions":[], "previousBlockHash":"000f140c48f672d222b035bdc87538c56b6be51fa53c18316c915a045346ad0f" }
+,{ "index":8, "timestamp":1524144557, "proof":1190, "transactions":[], "previousBlockHash":"00004202a33a629f3040cbf0a557cd1573b5d6174e64ec43a08fd5cf6fc981eb"}
+,{ "index":9, "timestamp":1524144565, "proof":2594, "transactions":[], "previousBlockHash":"000ca462cda663842db8cbf9c7560754a7b9ae51fced26e5fe1cb45ddd4d6e3e"}
+,]",blockHeight":11}
