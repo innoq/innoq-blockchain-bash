@@ -56,6 +56,7 @@ END { # process invalid files {{{
 	for(name in FAILS) {
 		print "invalid: " name
 		print FAILS[name]
+                exit 1
 	}
 }
 #}}}
