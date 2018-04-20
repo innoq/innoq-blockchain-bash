@@ -297,6 +297,24 @@ read_body() {
 #   fail_with 404
 }
 
+function validate () {
+    count=$(ls -t data/blocks/ | head -c1)
+
+    for ((i=1;i<=$count;i++)); do
+        sum=$(sha256sum ./data/blocks/$i | head -c64)
+        check=$(echo data/blocks/$(expr $i + 1) | ./JSON.awk | grep -i previousBlockHash | cut -f2 | sed s/\"//g)
+        if [[ "$sum" == "$check" ]]; then
+            echo -e "block $i ok"
+        else
+            echo -e "---------- block $i NOT ok ----------"
+            echo
+            return 1
+        fi
+    done
+    return 0
+}
+
+
 case "$REQUEST_METHOD" in
   GET)
     read_headers
