@@ -42,9 +42,12 @@
 ,0 1 {"index": 46,"timestamp": 1524221226,"proof": ,"transactions": [],"previousBlockHash": "729914fb2520e98b322727be0bee6cf22fea337e2d279fcad2aadd48e162b86a"} {"index": 46,"timestamp": 1524221226,"proof":1314,"transactions": [],"previousBlockHash": "729914fb2520e98b322727be0bee6cf22fea337e2d279fcad2aadd48e162b86a"}
 ,{"index": 47,"timestamp": 1524221289,"proof":7016,"transactions": [],"previousBlockHash": "9329770585bc9f28a93a03cd80b2c079a83854a8720cf6fe20e069ca163d66eb"}
 ,{"index": 48,"timestamp": 1524221308,"proof":1285,"transactions": [],"previousBlockHash": "0001a7cd3753960d720347f2235fb6a0d5e9c55691efae02ee4b75b5acc5bb8a"}
+,{"index":1227149,"timestamp":
 ,
+,{"index": 50,"timestamp": 1524221689,"proof":1639,"transactions": [],"previousBlockHash": "00068f6fb4f692b1109f068f4d1728bdb35e9e6232f5b3dcafa1feabce46a030"}
+,{"index": 51,"timestamp": 1524222359,"proof":6698,"transactions": [],"previousBlockHash": "000e6a8161fb45cdd4df91fb29fb10988a27227453278421529209d91379a5d8"}
 ,{"index":6,"previousBlockHash":"01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b","proof":54,"timestamp":1524145635,"transactions":[]}
 ,{"index":7,"previousBlockHash":"0401219575d82a00bfd0d125397b0f6b232b79f34a8ea32e922b2324c115b05b","proof":2,"timestamp":1524145636,"transactions":[]}
 ,{"index":8,"previousBlockHash":"0b0d98a75f6dbf63fea083e26d0766abaad29e2d067c864972b0363f0717e752","proof":19,"timestamp":1524146203,"transactions":[]}
 ,{"index":9,"previousBlockHash":"0e8fd12a004a5a3c97e463bc7f316315ec8c54dc4ecdbc0e212552eee31f41ec","proof":38,"timestamp":1524146203,"transactions":[]}
-,]",blockHeight":48}
+,]",blockHeight":51}
