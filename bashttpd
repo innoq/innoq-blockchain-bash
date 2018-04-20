@@ -290,7 +290,7 @@ read_headers() {
 
 REQUEST_BODY=""
 read_body() {
-  read -n$request_body_length REQUEST_BODY
+  LC_ALL=C read -r -n$request_body_length REQUEST_BODY
   log $REQUEST_BODY
 
 #   add_response_header "Content-Type" "text/plain"
