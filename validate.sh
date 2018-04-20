@@ -9,9 +9,11 @@ function validate () {
         if [[ "$sum" == "$check" ]]; then
             echo -e "block $i ok"
         else
-            echo -e "block $i NOT ok"
+            echo -e "\e[31mblock $i NOT ok"
             return 1
         fi
     done
     return 0
 }
+
+validate
