@@ -107,6 +107,7 @@ EOF
 recv() { echo "< $@" >&2; }
 send() { echo "> $@" >&2;
          printf '%s\r\n' "$*"; }
+log()  { echo "$@" >> log/bashttpd.log; }
 
 [[ $UID = 0 ]] && warn "It is not recommended to run bashttpd as root."
 
@@ -123,6 +124,7 @@ add_response_header() {
 
 declare -a HTTP_RESPONSE=(
    [200]="OK"
+   [201]="Created"
    [400]="Bad Request"
    [403]="Forbidden"
    [404]="Not Found"
@@ -174,8 +176,7 @@ serve_file() {
    send_response_ok_exit < "$file"
 }
 
-serve_dir_with_tree()
-{
+serve_dir_with_tree() {
    local dir="$1" tree_vers tree_opts basehref x
 
    add_response_header "Content-Type" "text/html"
@@ -188,8 +189,7 @@ serve_dir_with_tree()
       <(tree -H "$2" -L 1 "$tree_opts" -D "$dir")
 }
 
-serve_dir_with_ls()
-{
+serve_dir_with_ls() {
    local dir=$1
 
    add_response_header "Content-Type" "text/plain"
@@ -239,11 +239,15 @@ serve_static_string() {
 }
 
 on_uri_match() {
-   local regex=$1
-   shift
+  local method=$1
+  local uri_regex=$2
 
-   [[ $REQUEST_URI =~ $regex ]] && \
-      "$@" "${BASH_REMATCH[@]}"
+  shift; shift
+
+  if [[ $method == $REQUEST_METHOD ]] && [[ $REQUEST_URI =~ $uri_regex ]]; then
+    log "$method $uri_regex -> $@ ${BASH_REMATCH[@]}"
+    "$@" "${BASH_REMATCH[@]}"
+  fi
 }
 
 unconditionally() {
@@ -264,20 +268,55 @@ read -r REQUEST_METHOD REQUEST_URI REQUEST_HTTP_VERSION <<<"$line"
 [ -n "$REQUEST_HTTP_VERSION" ] \
    || fail_with 400
 
-# Only GET is supported at this time
-[ "$REQUEST_METHOD" = "GET" ] || fail_with 405
 
 declare -a REQUEST_HEADERS
 
-while read -r line; do
-   line=${line%%$'\r'}
-   recv "$line"
+read_headers() {
+  while read -r line; do
+    line=${line%%$'\r'}
+    recv "$line"
 
-   # If we've reached the end of the headers, break.
-   [ -z "$line" ] && break
+    # If we've reached the end of the headers, break.
+    if [ -z "$line" ]; then
+      break
+    else
+      [[ $line =~ ^Content-Length:[[:space:]]*([[:digit:]]+)$ ]] && \
+        request_body_length=${BASH_REMATCH[1]}
 
-   REQUEST_HEADERS+=("$line")
-done
+      REQUEST_HEADERS+=("$line")
+    fi
+  done
+}
+
+REQUEST_BODY=""
+read_body() {
+  read -n$request_body_length REQUEST_BODY
+  log $REQUEST_BODY
+
+#   add_response_header "Content-Type" "text/plain"
+#   fail_with 404
+}
+
+case "$REQUEST_METHOD" in
+  GET)
+    read_headers
+    ;;
+  DELETE)
+    read_headers
+    ;;
+  PUT)
+    read_headers
+    read_body
+    ;;
+  POST)
+    read_headers
+    read_body
+    ;;
+  *)
+    fail_with 405
+    ;;
+esac
 
 source "${BASH_SOURCE[0]%/*}"/bashttpd.conf
 fail_with 500
+0
