@@ -119,7 +119,7 @@ declare -a RESPONSE_HEADERS=(
 )
 
 add_response_header() {
-   RESPONSE_HEADERS+=("$1: $2")
+  RESPONSE_HEADERS+=("$1: $2")
 }
 
 declare -a HTTP_RESPONSE=(
@@ -153,22 +153,25 @@ fail_with() {
 }
 
 serve_file() {
-   local file=$1
+  local file=$1
+  local type=$2
 
-   CONTENT_TYPE=
-   case "$file" in
-     *\.css)
-       CONTENT_TYPE="text/css"
-       ;;
-     *\.js)
-       CONTENT_TYPE="text/javascript"
-       ;;
-     *)
-       read -r CONTENT_TYPE   < <(file -b --mime-type "$file")
-       ;;
-   esac
+  if ! [[ ${RESPONSE_HEADERS[*]} =~ Content-Type: ]]; then
+    CONTENT_TYPE=
+    case "$file" in
+      *\.css)
+        CONTENT_TYPE="text/css"
+        ;;
+      *\.js)
+        CONTENT_TYPE="text/javascript"
+        ;;
+      *)
+        read -r CONTENT_TYPE   < <(file -ib --mime-type "$file")
+        ;;
+    esac
 
-   add_response_header "Content-Type"   "$CONTENT_TYPE";
+    add_response_header "Content-Type"   "$CONTENT_TYPE";
+  fi
 
    read -r CONTENT_LENGTH < <(stat -c'%s' "$file")         && \
       add_response_header "Content-Length" "$CONTENT_LENGTH"
@@ -296,24 +299,6 @@ read_body() {
 #   add_response_header "Content-Type" "text/plain"
 #   fail_with 404
 }
-
-function validate () {
-    count=$(ls -t data/blocks/ | head -c1)
-
-    for ((i=1;i<=$count;i++)); do
-        sum=$(sha256sum ./data/blocks/$i | head -c64)
-        check=$(echo data/blocks/$(expr $i + 1) | ./JSON.awk | grep -i previousBlockHash | cut -f2 | sed s/\"//g)
-        if [[ "$sum" == "$check" ]]; then
-            echo -e "block $i ok"
-        else
-            echo -e "---------- block $i NOT ok ----------"
-            echo
-            return 1
-        fi
-    done
-    return 0
-}
-
 
 case "$REQUEST_METHOD" in
   GET)
